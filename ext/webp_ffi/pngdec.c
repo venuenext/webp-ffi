@@ -109,6 +109,7 @@ int UtilWritePNG(FILE* out_file, const WebPDecBuffer* const buffer) {
   unsigned char* const rgb = buffer->u.RGBA.rgba;
   const int stride = buffer->u.RGBA.stride;
   const int has_alpha = (buffer->colorspace == MODE_RGBA);
+  png_bytepp row_pointers = (png_bytepp) malloc(sizeof(png_bytep) * height);
   png_structp png;
   png_infop info;
   png_uint_32 y;
@@ -130,14 +131,16 @@ int UtilWritePNG(FILE* out_file, const WebPDecBuffer* const buffer) {
   png_init_io(png, out_file);
   png_set_IHDR(png, info, width, height, 8,
                has_alpha ? PNG_COLOR_TYPE_RGBA : PNG_COLOR_TYPE_RGB,
-               PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
+               PNG_INTERLACE_ADAM7, PNG_COMPRESSION_TYPE_DEFAULT,
                PNG_FILTER_TYPE_DEFAULT);
   png_write_info(png, info);
   for (y = 0; y < height; ++y) {
     png_bytep row = rgb + y * stride;
-    png_write_rows(png, &row, 1);
+    row_pointers[y] = row;
   }
+  png_write_image(png, row_pointers);
   png_write_end(png, info);
+  free(row_pointers);
   png_destroy_write_struct(&png, &info);
   return 1;
 }
