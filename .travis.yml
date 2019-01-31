@@ -11,15 +11,14 @@ rvm:
 - 2.5
 - 2.6
 cache: bundler
-
 deploy:
   provider: script
   script: bash .vnops/rubygems/deploy.sh
   on:
     tags: true
-    condition: $TRAVIS_TAG =~ ^v[0-9]
+    condition: "$TRAVIS_TAG =~ ^v[0-9]"
     rvm: 2.5
-
 env:
   global:
-  - RUBYGEMS_HOST=https://venuenext.jfrog.io/venuenext/api/gems/vn-release-gems
+  - RUBYGEMS_HOST=https://venuenext.jfrog.io/venuenext/api/gems/vn-gems-release
+  - secure: "qBumTZ9gXWamO7xCtmv5te20l75ipDQKu3HFbfzxtEvC9NfhGyNqFG0Vo6RYKBS7yGOZvUG8X36BKuSqv8gRCdFWvsgFARKM/2ZToZYjaI2m5yjAFp86OxeU+OuNsk4jDIzmY48aLRKxWUp1S+rPu9n45XMDOVcJ1wqXTWGPi3faH1jzv1IawQC9vWSTinamUSMcFYcr+pAxdkDxtUMR7qcZsrRP6uVQ1XVmtTVHeQwr3Hu6KJ7PZFIBO5Eoeqf4m+yPPmMUtD34+AlmPzjOiCyj+zKEVY0bLqyk//X9kdf/yJif6vKgZUFmg9cVqVN2Z9BtEO9cEPKEdRkp1zMGDVNnbFP+aG1XKzZTkBOtJ0hpALMDixNE8eMygoPxCj8L8NL/K8eZ+l3VF6KqYY2jot0Vaqh9a1ZJDnfu85SaCt5fPjBzHiPOER2FLt+gtYehmA98rNOEXWRghlKzwpKbkVmMr87/f6Qe22so+OcYPPJ4YmR/ZM2jkgHvPuXTL7C6tNnE/E4vs8xwiKXPANdVAuomawKsGrfjn8SjDD37l49M7CVRAz1gDfQbS/ftuKmNH/s+YkdgxLnwDf7rrU1vLijTc0zf/zmt/PHp5XGZhTb4EuoUryxPuctTnD6beCG6wV35HLbZt3nwTgCNa2Wp+8Wf+XV3Q82LGaXifSZX/l4="
